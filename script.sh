@@ -12,6 +12,8 @@ echo "Installing Discord..."
 wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
 dpkg -i discord.deb || apt --fix-broken install -y
 rm -f discord.deb
+echo "Installing vencord"
+sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"
 echo "Installing Google Chrome..."
 wget -q -O google-chrome.deb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 dpkg -i google-chrome.deb || apt --fix-broken install -y
