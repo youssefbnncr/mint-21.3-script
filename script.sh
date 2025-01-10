@@ -66,7 +66,7 @@ echo "Installing Steam and Heroic Games Launcher..."
 sudo add-apt-repository multiverse
 sudo apt update
 sudo apt install -y steam lutris wine64 gamemode
-flatpak install com.heroicgameslauncher.hgl
+flatpak install com.heroicgameslauncher.hgl -y
 
 echo "Installing emulators..."
 flatpak install org.godotengine.Godot -y
@@ -114,10 +114,6 @@ echo "Installing HandBrake, zsh, LV2 plugins, and fonts..."
 apt install -y handbrake zsh ttf-mscorefonts-installer
 sudo apt install -y virtualbox qbittorrent audacious
 
-# Installing Oh My Zsh
-echo "Setting up Zsh with Oh My Zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 # Installing Timeshift, GIMP, and Inkscape
 echo "Installing Timeshift, GIMP, and Inkscape..."
 apt install -y timeshift gimp inkscape
@@ -126,5 +122,9 @@ apt install -y timeshift gimp inkscape
 echo "Final system cleanup..."
 apt update && apt upgrade -y
 apt autoremove -y && apt clean
+
+# Installing Oh My Zsh
+echo "Setting up Zsh with Oh My Zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "Finish :)"
