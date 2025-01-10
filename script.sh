@@ -62,7 +62,7 @@ rm -f freedownloadmanager.deb
 echo "Installing Steam and Heroic Games Launcher..."
 sudo add-apt-repository multiverse
 sudo apt update
-sudo apt install -y steam
+sudo apt install -y steam lutris wine64 gamemode
 flatpak install com.heroicgameslauncher.hgl
 
 echo "Installing emulators..."
@@ -82,9 +82,10 @@ flatpak install app.xemu.xemu
 
 # Installing development tools (Node.js, PostgreSQL, etc.)
 echo "Installing development tools..."
-apt install -y nodejs dotnet-sdk-7.0
+apt install -y nodejs dotnet-sdk-7.0 cmake 
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y postgresql postgresql-contrib
+flatpak install com.getpostman.Postman
 
 # Installing audio production tools
 echo "Installing software for audio production..."
