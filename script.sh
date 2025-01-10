@@ -118,4 +118,4 @@ echo "Final system cleanup..."
 apt update && apt upgrade -y
 apt autoremove -y && apt clean
 
-echo "All requested software installed, and system configured for audio production and gaming!"
+echo "Finish :)"
