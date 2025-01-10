@@ -11,8 +11,8 @@ apt update && apt upgrade -y
 echo "Installing basic dependencies..."
 apt install -y wget curl git software-properties-common apt-transport-https
 
-echo "Installing Neovim..."
-apt install -y neovim
+echo "Installing Kitty and Neovim..."
+apt install -y kitty neovim fonts-jetbrains-mono
 
 echo "Installing Discord with Vencord and Element..."
 wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
