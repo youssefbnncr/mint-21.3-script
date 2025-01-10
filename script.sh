@@ -41,17 +41,27 @@ echo "Installing Obsidian..."
 wget -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/obsidian_1.7.7_amd64.deb"
 dpkg -i obsidian.deb || apt --fix-broken install -y
 rm -f obsidian.deb
-
+apt install -y jstest-gtk
+apt install -y mangohud
 echo "Installing Free Download Manager..."
 wget -O freedownloadmanager.deb "https://dn3.freedownloadmanager.org/6/latest/freedownloadmanager.deb"
 dpkg -i freedownloadmanager.deb || apt --fix-broken install -y
 rm -f freedownloadmanager.deb
-
+flatpak install com.github.libresprite.LibreSprite
 echo "Installing wget, curl, and git..."
 apt install -y wget curl git
 
+apt install -y python3 python3-pip
+apt install -y build-essential
+apt install -y dotnet-sdk-7.0
+flatpak install com.getpostman.Postman
+apt install -y sqlite3
+apt install -y openjdk-17-jdk
+apt install -y haruna
 echo "Installing Audacity, OBS Studio, GIMP, Kdenlive..."
 apt install -y audacity obs-studio gimp kdenlive lmms ardour 
+apt install -y zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "Installing VirtualBox, qBittorrent, Audacious..."
 apt install -y virtualbox qbittorrent audacious
