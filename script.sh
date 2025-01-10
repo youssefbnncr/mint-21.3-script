@@ -27,7 +27,7 @@ rm -f discord.deb
 sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"
 
 # Onlyoffice installation
-flatpak install flathub org.onlyoffice.desktopeditors
+flatpak install org.onlyoffice.desktopeditors  -y
 
 # Element installation
 wget -O /usr/share/keyrings/element-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
@@ -69,26 +69,26 @@ sudo apt install -y steam lutris wine64 gamemode
 flatpak install com.heroicgameslauncher.hgl
 
 echo "Installing emulators..."
-flatpak install org.godotengine.Godot    
-flatpak install io.github.simple64.simple64
-flatpak install info.cemu.Cemu
-flatpak install org.ryujinx.Ryujinx
-flatpak install org.DolphinEmu.dolphin-emu
-flatpak install org.ppsspp.PPSSPP
-flatpak install net.pcsx2.PCSX2
-flatpak install flathub org.duckstation.DuckStation
-flatpak install io.github.lime3ds.Lime3DS
-flatpak install org.libretro.RetroArch
-flatpak install com.github.tchx84.Flatseal
-flatpak install net.davidotek.pupgui2
-flatpak install app.xemu.xemu
+flatpak install org.godotengine.Godot -y
+flatpak install io.github.simple64.simple64 -y
+flatpak install info.cemu.Cemu -y
+flatpak install org.ryujinx.Ryujinx -y
+flatpak install org.DolphinEmu.dolphin-emu -y
+flatpak install org.ppsspp.PPSSPP -y
+flatpak install net.pcsx2.PCSX2 -y
+flatpak install flathub org.duckstation.DuckStation -y
+flatpak install io.github.lime3ds.Lime3DS -y
+flatpak install org.libretro.RetroArch -y
+flatpak install com.github.tchx84.Flatseal -y
+flatpak install net.davidotek.pupgui2 -y
+flatpak install app.xemu.xemu -y
 
 # Installing development tools (Node.js, PostgreSQL, etc.)
 echo "Installing development tools..."
 apt install -y nodejs dotnet-sdk-7.0 cmake 
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y postgresql postgresql-contrib
-flatpak install com.getpostman.Postman
+flatpak install com.getpostman.Postman -y
 
 # Installing audio production tools
 echo "Installing software for audio production..."
