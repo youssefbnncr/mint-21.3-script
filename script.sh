@@ -14,18 +14,20 @@ apt install -y wget curl git software-properties-common apt-transport-https
 echo "Installing Neovim..."
 apt install -y neovim
 
-echo "Installing Discord..."
+echo "Installing Discord with Vencord and Element..."
 wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
 dpkg -i discord.deb || apt --fix-broken install -y
 rm -f discord.deb
-
-echo "Installing Vencord..."
 sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"
+wget -O /usr/share/keyrings/element-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/element-archive-keyring.gpg] https://packages.element.io/debian/ default main" | tee /etc/apt/sources.list.d/element.list
+apt update && apt install -y element-desktop
 
-echo "Installing Google Chrome..."
+echo "Installing Google Chrome and Brave..."
 wget -q -O google-chrome.deb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 dpkg -i google-chrome.deb || apt --fix-broken install -y
 rm -f google-chrome.deb
+curl -fsS https://dl.brave.com/install.sh | sh
 
 echo "Installing Visual Studio Code..."
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -99,8 +101,21 @@ usermod -a -G audio $(whoami)
 echo "@audio   -  rtprio     95" >> /etc/security/limits.d/audio.conf
 echo "@audio   -  memlock    unlimited" >> /etc/security/limits.d/audio.conf
 
+echo "Installing NoiseTorch..."
+wget -O noisetorch.tar.gz https://github.com/lawl/NoiseTorch/releases/latest/download/NoiseTorch_x64.tar.gz
+tar -xvf noisetorch.tar.gz -C /usr/local/bin
+rm -f noisetorch.tar.gz
+
+echo "Installing HandBrake..."
+apt install -y handbrake
+
+echo "Installing FileBot..."
+wget -O filebot.deb "https://get.filebot.net/filebot/FileBot_5.1.0/FileBot_5.1.0_amd64.deb"
+dpkg -i filebot.deb || apt --fix-broken install -y
+rm -f filebot.deb
+
 echo "Final system cleanup..."
 apt update && apt upgrade -y
 apt autoremove -y && apt clean
 
-echo "Everything installed."
+echo "All requested software installed, and system configured for audio production and gaming!"
