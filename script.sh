@@ -69,7 +69,7 @@ sudo apt install -y steam lutris wine64 gamemode
 flatpak install com.heroicgameslauncher.hgl
 
 echo "Installing emulators..."
-flatpak install org.godotengine.Godot
+flatpak install org.godotengine.Godot    
 flatpak install io.github.simple64.simple64
 flatpak install info.cemu.Cemu
 flatpak install org.ryujinx.Ryujinx
