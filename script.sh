@@ -1,34 +1,44 @@
 #!/bin/bash
 
+# Check if script is run as root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root. Use sudo."
     exit 1
 fi
 
+# Updating system
 echo "Updating system..."
 apt update && apt upgrade -y
-apt remove gnome-terminal hexchat transmission-gtk celluloid libreoffice-* rhythmbox hypnotix webapp-manager pix drawing
-echo "Installing basic dependencies..."
-apt install -y wget curl git software-properties-common apt-transport-https
+apt remove -y gnome-terminal hexchat transmission-gtk celluloid libreoffice-* rhythmbox hypnotix webapp-manager pix drawing
 
+# Installing essential utilities
+echo "Installing basic dependencies..."
+apt install -y wget curl git software-properties-common apt-transport-https python3 python3-pip build-essential sqlite3 openjdk-17-jdk
+
+# Installing terminal & text editor
 echo "Installing Kitty and Neovim..."
 apt install -y kitty neovim fonts-jetbrains-mono
 
+# Installing communication apps (Discord, Vencord, Element)
 echo "Installing Discord with Vencord and Element..."
 wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
 dpkg -i discord.deb || apt --fix-broken install -y
 rm -f discord.deb
 sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"
+
+# Element installation
 wget -O /usr/share/keyrings/element-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/element-archive-keyring.gpg] https://packages.element.io/debian/ default main" | tee /etc/apt/sources.list.d/element.list
 apt update && apt install -y element-desktop
 
+# Installing browsers
 echo "Installing Google Chrome and Brave..."
 wget -q -O google-chrome.deb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 dpkg -i google-chrome.deb || apt --fix-broken install -y
 rm -f google-chrome.deb
 curl -fsS https://dl.brave.com/install.sh | sh
 
+# Installing Visual Studio Code
 echo "Installing Visual Studio Code..."
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/
@@ -37,42 +47,52 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packa
 apt update
 apt install -y code
 
-echo "Installing Obsidian..."
+# Installing Obsidian & other tools
+echo "Installing Obsidian, Free Download Manager..."
 wget -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/obsidian_1.7.7_amd64.deb"
 dpkg -i obsidian.deb || apt --fix-broken install -y
 rm -f obsidian.deb
-apt install -y jstest-gtk
-apt install -y mangohud
-echo "Installing Free Download Manager..."
+
+# Installing Free Download Manager
 wget -O freedownloadmanager.deb "https://dn3.freedownloadmanager.org/6/latest/freedownloadmanager.deb"
 dpkg -i freedownloadmanager.deb || apt --fix-broken install -y
 rm -f freedownloadmanager.deb
-flatpak install com.github.libresprite.LibreSprite
-echo "Installing wget, curl, and git..."
-apt install -y wget curl git
 
-apt install -y python3 python3-pip
-apt install -y build-essential
-apt install -y dotnet-sdk-7.0
-flatpak install com.getpostman.Postman
-apt install -y sqlite3
-apt install -y openjdk-17-jdk
-apt install -y haruna
-echo "Installing Audacity, OBS Studio, GIMP, Kdenlive..."
-apt install -y audacity obs-studio gimp kdenlive lmms ardour 
-apt install -y zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Installing gaming and entertainment (Steam, Heroic, emulators)
+echo "Installing Steam and Heroic Games Launcher..."
+sudo add-apt-repository multiverse
+sudo apt update
+sudo apt install -y steam
+flatpak install com.heroicgameslauncher.hgl
 
-echo "Installing VirtualBox, qBittorrent, Audacious..."
-apt install -y virtualbox qbittorrent audacious
+echo "Installing emulators..."
+flatpak install org.godotengine.Godot
+flatpak install io.github.simple64.simple64
+flatpak install info.cemu.Cemu
+flatpak install org.ryujinx.Ryujinx
+flatpak install org.DolphinEmu.dolphin-emu
+flatpak install org.ppsspp.PPSSPP
+flatpak install net.pcsx2.PCSX2
+flatpak install flathub org.duckstation.DuckStation
+flatpak install io.github.lime3ds.Lime3DS
+flatpak install org.libretro.RetroArch
+flatpak install com.github.tchx84.Flatseal
+flatpak install net.davidotek.pupgui2
+flatpak install app.xemu.xemu
 
-echo "Installing Node.js..."
+# Installing development tools (Node.js, PostgreSQL, etc.)
+echo "Installing development tools..."
+apt install -y nodejs dotnet-sdk-7.0
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs
-
-echo "Installing PostgreSQL..."
 apt install -y postgresql postgresql-contrib
 
+# Installing audio production tools
+echo "Installing software for audio production..."
+apt install -y ardour cadence carla lmms audacity
+apt install -y calf-plugins lsp-plugins-lv2 zam-plugins
+apt install -y jackd2 qjackctl
+
+# Installing PipeWire and configuring
 echo "Replacing PulseAudio with PipeWire..."
 apt install -y pipewire pipewire-audio-client-libraries pipewire-pulse pipewire-bin libspa-0.2-bluetooth wireplumber
 systemctl --user enable pipewire pipewire-pulse wireplumber
@@ -85,31 +105,20 @@ else
     echo "PipeWire setup encountered an issue. Please check manually."
 fi
 
-echo "Installing emulators..."
-flatpak install org.godotengine.Godot
-flatpak install io.github.simple64.simple64
-flatpak install info.cemu.Cemu
-flatpak install org.ryujinx.Ryujinx
-flatpak install org.DolphinEmu.dolphin-emu
-flatpak install org.ppsspp.PPSSPP
-flatpak install net.pcsx2.PCSX2 -y
-flatpak install flathub org.duckstation.DuckStation -y
+# Installing system utilities
+echo "Installing HandBrake, zsh, LV2 plugins, and fonts..."
+apt install -y handbrake zsh ttf-mscorefonts-installer
+sudo apt install -y virtualbox qbittorrent audacious
 
-echo "Setting up Linux for audio production..."
-apt install -y ardour cadence carla lmms audacity
+# Installing Oh My Zsh
+echo "Setting up Zsh with Oh My Zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-echo "Installing LV2 and VST plugin support..."
-apt install -y calf-plugins lsp-plugins-lv2 zam-plugins
+# Installing Timeshift, GIMP, and Inkscape
+echo "Installing Timeshift, GIMP, and Inkscape..."
+apt install -y timeshift gimp inkscape
 
-echo "Installing JACK utilities and enabling real-time privileges..."
-apt install -y jackd2 qjackctl
-usermod -a -G audio $(whoami)
-echo "@audio   -  rtprio     95" >> /etc/security/limits.d/audio.conf
-echo "@audio   -  memlock    unlimited" >> /etc/security/limits.d/audio.conf
-
-echo "Installing HandBrake..."
-apt install -y handbrake
-
+# Final cleanup
 echo "Final system cleanup..."
 apt update && apt upgrade -y
 apt autoremove -y && apt clean
