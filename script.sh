@@ -26,6 +26,9 @@ dpkg -i discord.deb || apt --fix-broken install -y
 rm -f discord.deb
 sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"
 
+# Onlyoffice installation
+flatpak install flathub org.onlyoffice.desktopeditors
+
 # Element installation
 wget -O /usr/share/keyrings/element-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/element-archive-keyring.gpg] https://packages.element.io/debian/ default main" | tee /etc/apt/sources.list.d/element.list
