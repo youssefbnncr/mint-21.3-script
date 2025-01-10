@@ -7,7 +7,7 @@ fi
 
 echo "Updating system..."
 apt update && apt upgrade -y
-
+apt remove gnome-terminal hexchat transmission-gtk celluloid libreoffice-* rhythmbox hypnotix webapp-manager pix drawing
 echo "Installing basic dependencies..."
 apt install -y wget curl git software-properties-common apt-transport-https
 
@@ -38,7 +38,7 @@ apt update
 apt install -y code
 
 echo "Installing Obsidian..."
-wget -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.13/Obsidian-1.4.13.deb"
+wget -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/obsidian_1.7.7_amd64.deb"
 dpkg -i obsidian.deb || apt --fix-broken install -y
 rm -f obsidian.deb
 
@@ -51,7 +51,7 @@ echo "Installing wget, curl, and git..."
 apt install -y wget curl git
 
 echo "Installing Audacity, OBS Studio, GIMP, Kdenlive..."
-apt install -y audacity obs-studio gimp kdenlive
+apt install -y audacity obs-studio gimp kdenlive lmms ardour 
 
 echo "Installing VirtualBox, qBittorrent, Audacious..."
 apt install -y virtualbox qbittorrent audacious
@@ -76,17 +76,13 @@ else
 fi
 
 echo "Installing emulators..."
-apt install -y dolphin-emu
-add-apt-repository -y ppa:citra-emu/ppa
-apt update && apt install -y citra
-apt install -y retroarch
-wget -O - https://dl.yuzu-emu.org/yuzu-debian.gpg | gpg --dearmor > /usr/share/keyrings/yuzu.gpg
-echo "deb [signed-by=/usr/share/keyrings/yuzu.gpg] https://dl.yuzu-emu.org/ stable main" > /etc/apt/sources.list.d/yuzu.list
-apt update && apt install -y yuzu
-add-apt-repository -y ppa:ppsspp/stable
-apt update && apt install -y ppsspp
-add-apt-repository -y ppa:pcsx2-team/pcsx2-daily
-apt update && apt install -y pcsx2
+flatpak install org.godotengine.Godot
+flatpak install io.github.simple64.simple64
+flatpak install info.cemu.Cemu
+flatpak install org.ryujinx.Ryujinx
+flatpak install org.DolphinEmu.dolphin-emu
+flatpak install org.ppsspp.PPSSPP
+flatpak install net.pcsx2.PCSX2 -y
 flatpak install flathub org.duckstation.DuckStation -y
 
 echo "Setting up Linux for audio production..."
@@ -101,18 +97,8 @@ usermod -a -G audio $(whoami)
 echo "@audio   -  rtprio     95" >> /etc/security/limits.d/audio.conf
 echo "@audio   -  memlock    unlimited" >> /etc/security/limits.d/audio.conf
 
-echo "Installing NoiseTorch..."
-wget -O noisetorch.tar.gz https://github.com/lawl/NoiseTorch/releases/latest/download/NoiseTorch_x64.tar.gz
-tar -xvf noisetorch.tar.gz -C /usr/local/bin
-rm -f noisetorch.tar.gz
-
 echo "Installing HandBrake..."
 apt install -y handbrake
-
-echo "Installing FileBot..."
-wget -O filebot.deb "https://get.filebot.net/filebot/FileBot_5.1.0/FileBot_5.1.0_amd64.deb"
-dpkg -i filebot.deb || apt --fix-broken install -y
-rm -f filebot.deb
 
 echo "Final system cleanup..."
 apt update && apt upgrade -y
