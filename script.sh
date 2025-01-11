@@ -9,7 +9,7 @@ fi
 # Updating system
 echo "Updating system..."
 apt update && apt upgrade -y
-apt remove -y gnome-terminal hexchat transmission-gtk celluloid libreoffice-* rhythmbox hypnotix webapp-manager pix drawing
+apt remove -y gnome-terminal hexchat transmission-gtk celluloid libreoffice-* rhythmbox hypnotix webapp-manager pix drawing firefox
 
 # Installing essential utilities
 echo "Installing basic dependencies..."
@@ -90,9 +90,12 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y postgresql postgresql-contrib
 flatpak install com.getpostman.Postman -y
 
+# Multimedia software
+apt install -y obs-studio kdenlive
+
 # Installing audio production tools
 echo "Installing software for audio production..."
-apt install -y ardour cadence carla lmms audacity
+apt install -y ardour carla lmms audacity
 apt install -y calf-plugins lsp-plugins-lv2 zam-plugins
 apt install -y jackd2 qjackctl
 
