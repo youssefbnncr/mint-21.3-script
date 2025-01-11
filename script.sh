@@ -118,6 +118,52 @@ sudo apt install -y virtualbox qbittorrent audacious
 echo "Installing Timeshift, GIMP, and Inkscape..."
 apt install -y timeshift gimp inkscape
 
+# Setup icons and theme
+echo "Disable Icons from desktop..."
+gsettings set org.nemo.desktop show-desktop-icons false
+echo "Installing Arc Theme and Papirus Icon Theme..."
+sudo apt install -y arc-theme papirus-icon-theme
+
+# Set GTK theme to Arc and icons to Papirus
+echo "Configuring GTK theme and icons..."
+gsettings set org.cinnamon.desktop.interface gtk-theme "Arc-Dark"
+gsettings set org.cinnamon.desktop.interface icon-theme "Papirus-Dark"
+gsettings set org.cinnamon.desktop.wm.preferences theme "Arc-Dark"
+
+# Install Qt configuration tools
+echo "Installing Qt configuration tools..."
+sudo apt install -y qt5ct #qt6ct
+
+# Set the Qt platform theme to qt5ct
+echo "Configuring environment for Qt themes..."
+if ! grep -q "QT_QPA_PLATFORMTHEME=qt5ct" /etc/environment; then
+    echo "QT_QPA_PLATFORMTHEME=qt5ct" | sudo tee -a /etc/environment
+fi
+
+# Apply Qt theme using qt5ct
+echo "Setting Qt theme to match GTK..."
+qt5ct_config_file="$HOME/.config/qt5ct/qt5ct.conf"
+mkdir -p $(dirname "$qt5ct_config_file")
+
+cat > "$qt5ct_config_file" <<EOL
+[Appearance]
+style=gtk2
+color_scheme_path=
+icon_theme=Papirus-Dark
+custom_palette=false
+EOL
+
+# Apply Qt 6 settings
+# qt6ct_config_file="$HOME/.config/qt6ct/qt6ct.conf"
+# mkdir -p $(dirname "$qt6ct_config_file")
+
+# cat > "$qt6ct_config_file" <<EOL
+# [Appearance]
+# style=gtk2
+# icon_theme=Papirus-Dark
+# custom_palette=false
+# EOL
+
 # Final cleanup
 echo "Final system cleanup..."
 apt update && apt upgrade -y
@@ -126,5 +172,3 @@ apt autoremove -y && apt clean
 # Installing Oh My Zsh
 echo "Setting up Zsh with Oh My Zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-echo "Finish :)"
