@@ -68,21 +68,6 @@ sudo apt update
 sudo apt install -y steam lutris wine64 gamemode
 flatpak install com.heroicgameslauncher.hgl -y
 
-echo "Installing emulators..."
-flatpak install org.godotengine.Godot -y
-flatpak install io.github.simple64.simple64 -y
-flatpak install info.cemu.Cemu -y
-flatpak install org.ryujinx.Ryujinx -y
-flatpak install org.DolphinEmu.dolphin-emu -y
-flatpak install org.ppsspp.PPSSPP -y
-flatpak install net.pcsx2.PCSX2 -y
-flatpak install flathub org.duckstation.DuckStation -y
-flatpak install io.github.lime3ds.Lime3DS -y
-flatpak install org.libretro.RetroArch -y
-flatpak install com.github.tchx84.Flatseal -y
-flatpak install net.davidotek.pupgui2 -y
-flatpak install app.xemu.xemu -y
-
 # Installing development tools (Node.js, PostgreSQL, etc.)
 echo "Installing development tools..."
 apt install -y nodejs dotnet-sdk-7.0 cmake 
